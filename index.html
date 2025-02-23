@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Membres</title>
+</head>
+<body>
+    <h1>Ajouter un Membre</h1>
+    <form id="membreForm">
+        <input type="text" id="nom" placeholder="Nom" required>
+        <input type="text" id="prenom" placeholder="Prénom" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="file" id="photo" accept="image/*">
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <h1>Liste des Membres</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="membreList"></tbody>
+    </table>
+
+    <div id="editFormContainer" style="display:none;">
+        <h1>Modifier un Membre</h1>
+        <form id="editForm">
+            <input type="hidden" id="editId">
+            <input type="text" id="editNom" required>
+            <input type="text" id="editPrenom" required>
+            <input type="email" id="editEmail" required>
+            <input type="file" id="editPhoto" accept="image/*">
+            <img id="editPhotoPreview" width="50">
+            <button type="submit">Modifier</button>
+        </form>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

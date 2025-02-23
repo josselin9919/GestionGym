@@ -1,0 +1,43 @@
+{
+  "name": "hello-word",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "hello-word": "file:",
+    "sqlite3": "^5.1.7"
+  },
+  "build": {
+    "appId": "com.gymmanager.app",
+    "productName": "Gym Manager",
+    "copyright": "© 2025 Gym Manager",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.jpg"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.jpg"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+}
