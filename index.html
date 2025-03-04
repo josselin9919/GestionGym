@@ -1,47 +1,143 @@
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Gestion des Membres</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self'; 
+    script-src 'self' 'unsafe-inline'; 
+    style-src 'self' 'unsafe-inline'; 
+    img-src 'self';
+    object-src 'none';">
+
+    <title>Gestion Salle de Gym</title>
+
+    <!-- Charger les styles localement -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+    
+    <style>
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+        }
+
+        /* Modifier les icônes de tri */
+        .sorting {
+            background-image: url('assets/images/sort_both.png') !important;
+        }
+        .sorting_asc {
+            background-image: url('assets/images/sort_asc.png') !important;
+        }
+        .sorting_desc {
+            background-image: url('assets/images/sort_desc.png') !important;
+        }
+    </style>
 </head>
 <body>
-    <h1>Ajouter un Membre</h1>
-    <form id="membreForm">
-        <input type="text" id="nom" placeholder="Nom" required>
-        <input type="text" id="prenom" placeholder="Prénom" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="file" id="photo" accept="image/*">
-        <button type="submit">Ajouter</button>
-    </form>
+    <h1>Gestion des Membres</h1>
 
-    <h1>Liste des Membres</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Photo</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="membreList"></tbody>
-    </table>
-
-    <div id="editFormContainer" style="display:none;">
-        <h1>Modifier un Membre</h1>
+    <button onclick="openParamModal2()" class="btn btn-success">Ajouter Membre</button>
+    <div id="paramModal2" class="modal">
+        <div class="modal-content">
+            <form id="memberForm">
+                <input type="text" id="nom" placeholder="Nom" required>
+                <input type="text" id="prenom" placeholder="Prénom" required>
+                <input type="number" id="age" placeholder="Âge" required>
+                <input type="text" id="quartier" placeholder="Quartier" required>
+                <input type="text" id="sexe" placeholder="Sexe" required>
+                <input type="text" id="tel" placeholder="Téléphone" required>
+                <input type="date" id="date_i" placeholder="Date d'inscription" required>
+                <input type="date" id="date_D" placeholder="Date de début" required>
+                <input type="date" id="date_F" placeholder="Date de fin" required>
+                <button type="submit">Ajouter Membre</button>
+                <button type="button" onclick="closeModal2()">Fermer</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modale de modification -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h2>Modifier Membre</h2>
         <form id="editForm">
-            <input type="hidden" id="editId">
-            <input type="text" id="editNom" required>
-            <input type="text" id="editPrenom" required>
-            <input type="email" id="editEmail" required>
-            <input type="file" id="editPhoto" accept="image/*">
-            <img id="editPhotoPreview" width="50">
-            <button type="submit">Modifier</button>
+            <input type="hidden" id="editMemberId">
+            <input type="text" id="editNom" placeholder="Nom" required>
+            <input type="text" id="editPrenom" placeholder="Prénom" required>
+            <input type="number" id="editAge" placeholder="Âge" required>
+            <input type="text" id="editQuartier" placeholder="Quartier" required>
+            <input type="text" id="editSexe" placeholder="Sexe" required>
+            <input type="text" id="editTel" placeholder="Téléphone" required>
+            <input type="date" id="editDate_i" placeholder="Date d'inscription" required>
+            <input type="date" id="editDate_D" placeholder="Date de début" required>
+            <input type="date" id="editDate_F" placeholder="Date de fin" required>
+            <button type="submit">Enregistrer</button>
+            <button type="button" onclick="closeEditModal()">Fermer</button>
         </form>
     </div>
+</div>
+    <!-- Table pour afficher les membres -->
+    <table id="membersTable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Âge</th>
+                <th>Quartier</th>
+                <th>Sexe</th>
+                <th>Téléphone</th>
+                <th>Date d'inscription</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>parametre</th>
+                <th>modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
+    <div id="paramModal" class="modal">
+        <div class="modal-content">
+            <h2>Ajouter Paramètres</h2>
+            <form id="paramForm">
+                <input type="hidden" id="paramMemberId">
+                <input type="number" id="poids" placeholder="Poids (kg)" required>
+                <input type="number" id="taille" placeholder="Taille (cm)" required>
+                <input type="text" id="tension" placeholder="Tension" required>
+                <input type="number" step="0.1" id="glycemie" placeholder="Glycémie" required>
+                <button type="submit">Enregistrer</button>
+                <button type="button" onclick="closeModal()">Fermer</button>
+            </form>
+        </div>
+    </div>
+
+     <!--Charger les scripts localement -->
+
+    <script src="assets/js/jquery-3.5.1.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+
+    
+    <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="renderer.js"></script>
+
+   
 </body>
 </html>
