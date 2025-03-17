@@ -55,7 +55,7 @@
 <body>
     <h1>Gestion des Membres</h1>
 
-    <button onclick="openParamModal2()" class="btn btn-success">Ajouter Membre</button>
+    <button onclick="openParamModal2()" class="btn btn-success btn-lg btn-block">Ajouter Membre</button>
     <div id="paramModal2" class="modal">
         <div class="modal-content">
             <form id="memberForm">
@@ -84,7 +84,7 @@
             <input type="number" id="editAge" placeholder="Âge" required>
             <input type="text" id="editQuartier" placeholder="Quartier" required>
             <input type="text" id="editSexe" placeholder="Sexe" required>
-            <input type="text" id="editTel" placeholder="Téléphone" required>
+            <input type="number" id="editTel" placeholder="Téléphone" required>
             <input type="date" id="editDate_i" placeholder="Date d'inscription" required>
             <input type="date" id="editDate_D" placeholder="Date de début" required>
             <input type="date" id="editDate_F" placeholder="Date de fin" required>
@@ -93,7 +93,7 @@
         </form>
     </div>
 </div>
-    <!-- Table pour afficher les membres -->
+    <!-- Table pour affiche les membres -->
     <table id="membersTable">
         <thead>
             <tr>
@@ -104,11 +104,12 @@
                 <th>Sexe</th>
                 <th>Téléphone</th>
                 <th>Date d'inscription</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
+                <th>Status</th>
                 <th>parametre</th>
                 <th>modifier</th>
                 <th>Supprimer</th>
+                <th>payement</th>
+                <th>detail</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -123,11 +124,55 @@
                 <input type="number" id="taille" placeholder="Taille (cm)" required>
                 <input type="text" id="tension" placeholder="Tension" required>
                 <input type="number" step="0.1" id="glycemie" placeholder="Glycémie" required>
+                <input type="date" id="date_p" placeholder="Date de prise" required>
                 <button type="submit">Enregistrer</button>
                 <button type="button" onclick="closeModal()">Fermer</button>
             </form>
         </div>
     </div>
+    <div id="payeModal" class="modal">
+        <div class="modal-content">
+            <h2>Ajouter Un Payement</h2>
+            <form id="payeForm">
+                <input type="hidden" id="payeMemberId">
+                <input type="number" id="montant" placeholder="montant (FCFA)" required>
+                <input type="date" id="payedate_P" placeholder="Date de payement" required>
+                <input type="date" id="payeDate_D" placeholder="Date de début" required>
+                <input type="date" id="payeDate_F" placeholder="Date de fin" required>
+                <button type="submit">Enregistrer</button>
+                <button type="button" onclick="closeModal3()">Fermer</button>
+            </form>
+        </div>
+    </div>
+    <div id="afficheModal" class="modal">
+        <div class="modal-content">
+            <!-- Table pour affiche les membres -->
+            <table id="parametreTable">
+                <thead>
+                    <tr>
+                        <th>Date de Prise</th>
+                        <th>Poids</th>
+                        <th>Taille</th>
+                        <th>Tension</th>
+                        <th>glycemie</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+             <!-- Table pour affiche les membres -->
+             <table id="payementTable">
+                <thead>
+                    <tr>
+                        <th>Date de Paiement</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button onclick="closeAfficheModal()" class="btn btn-danger">FERMER</button>
+        </div>
+    </div>
+
 
      <!--Charger les scripts localement -->
 

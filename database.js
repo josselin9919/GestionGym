@@ -15,7 +15,7 @@ db.serialize(() => {
         tel TEXT UNIQUE,
         date_i DATE,
         date_D DATE,
-        date_F DATE
+        date_F DATE,
     );`);
 
     db.run(`CREATE TABLE IF NOT EXISTS Parametre (
