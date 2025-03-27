@@ -13,7 +13,11 @@
   "dependencies": {
     "datatables.net-dt": "^2.2.2",
     "electron": "^34.3.0",
+    "electron-printer": "^0.0.5",
     "projet": "file:",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^3.2.9"
   }
 }

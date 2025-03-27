@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Historique des Ventes</title>
+    <!-- Ajoutez vos styles CSS ici -->
+     <!-- Charger les styles localement -->
+     <link rel="stylesheet" href="assets/css/all.min.css">
+     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+ 
+     <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+       <!-- Vendor CSS Files -->
+   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+ 
+   <!-- Main CSS File -->
+   <link href="assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <header id="header" class="header dark-background d-flex flex-column">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+    
+        <div class="profile-img">
+          <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+        </div>
+    
+        <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">Alex Smith</h1>
+        </a>
+    
+    
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="index.html" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+            <li><a href="membres.html"><i class="bi bi-person navicon"></i> Membres</a></li>
+            <li><a href="produit.html"><i class="bi bi-file-earmark-text navicon"></i> Produit</a></li>
+            <li><a href="vente.html"><i class="bi bi-images navicon"></i> Vente</a></li>
+            <li><a href="historique.html"><i class="bi bi-hdd-stack navicon"></i> Historique de vente</a></li>
+            <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Dropdown 1</a></li>
+                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    <li><a href="#">Deep Dropdown 1</a></li>
+                    <li><a href="#">Deep Dropdown 2</a></li>
+                    <li><a href="#">Deep Dropdown 3</a></li>
+                    <li><a href="#">Deep Dropdown 4</a></li>
+                    <li><a href="#">Deep Dropdown 5</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dropdown 2</a></li>
+                <li><a href="#">Dropdown 3</a></li>
+                <li><a href="#">Dropdown 4</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+          </ul>
+        </nav>
+    
+      </header>
+      <main class="main">
+    <button onclick="navigateToProduit()" class="btn btn-success">Retour à la page produit</button>
+    <h1>Historique des Ventes</h1>
+    <div class="search-container">
+      <label for="dateSearch">Rechercher par date :</label>
+      <input type="date" id="dateSearch">
+      <button onclick="rechercherParDate()" class="btn btn-primary">Rechercher par date</button>
+  </div>
+
+  <div class="search-container">
+    <label>Rechercher par nom de produit :</label>
+    <!-- SUPPRIMER CET ELEMENT INPUT:  <input type="text" id="productSearch" placeholder="Nom du produit"> -->
+    <button onclick="rechercherParProduit()" class="btn btn-primary">Rechercher par produit</button>
+</div>
+
+  <div class="search-container">
+    <label for="startDate">Date de début :</label>
+    <input type="date" id="startDate">
+    <label for="endDate">Date de fin :</label>
+    <input type="date" id="endDate">
+    <button onclick="rechercherParPeriode()" class="btn btn-primary">Rechercher par période</button>
+</div>
+    <table id="historiqueTable">
+        <thead>
+            <tr>
+                <th>Date de vente</th>
+                <th>Nom du produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Prix total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données de l'historique seront insérées ici -->
+        </tbody>
+    </table>
+</main>
+    <!-- Inclure jQuery et DataTables -->
+    <script src="assets/js/jquery-3.5.1.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+
+    <!-- Inclure votre script pour récupérer et afficher les données -->
+    <script src="historique.js"></script>
+    <script src="renderer2.js"></script>
+    
+</body>
+</html>

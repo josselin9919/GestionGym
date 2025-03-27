@@ -7,24 +7,30 @@
     script-src 'self' 'unsafe-inline'; 
     style-src 'self' 'unsafe-inline'; 
     img-src 'self';
-    object-src 'none';">
+    object-src 'none';
+    font-src 'self' data:;">
+   
 
     <title>Gestion Salle de Gym</title>
+ <!-- Charger les styles localement -->
+ <link rel="stylesheet" href="assets/css/all.min.css">
+ <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
+ <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+   <!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+<!-- Main CSS File -->
+<link href="assets/css/main.css" rel="stylesheet">
     <!-- Charger les styles localement -->
     <link rel="stylesheet" href="assets/css/all.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
-      <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
     
     <style>
         table {
@@ -105,31 +111,75 @@
         </nav>
     
       </header>
- 
+      <main class="main">
+    <button onclick="navigateToVente()" class="btn btn-success">Effectuer une vente</button>
+    <button onclick="navigateToHistorique()" class="btn btn-primary">Afficher l'Historique des Ventes</button>
+        <h1>Gestion des Produits</h1>
+
+    <button onclick="openParamModal2()" class="btn btn-success btn-lg btn-block">Ajouter Produit</button>
+    
+    <div id="paramModal2" class="modal">
+        <div class="modal-content">
+            <form id="productForm">
+                <label>Nom du produit</label>
+                <input type="text" id="nom" placeholder="Nom" required>
+                <label>Prix du produit</label>                
+                <input type="number" id="prix" placeholder="prix" required>
+                <label>Quantité en stock</label>
+                <input type="number" id="quantite" placeholder="quantite" required>
+                
+
+                <button type="submit" onclick="closeModal2()">Ajouter </button>
+                <button type="button" onclick="closeModal2()">Fermer</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modale de modification -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h2>Modifier Produit</h2>
+        <form id="editForm">
+            <input type="hidden" id="editProductId">
+            <input type="text" id="editNom" placeholder="Nom" required>
+            <input type="number" id="editPrix" placeholder="prix" required>
+            <input type="number" id="editQuantite" placeholder="Quantite" required>
+            
+            <button type="submit">Enregistrer</button>
+            <button type="button" onclick="closeEditModal()">Fermer</button>
+        </form>
+    </div>
+</div>
+    <!-- Table pour affiche les produits -->
+    <table id="productsTable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Quantite</th>
+                <th>modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+      </main>
+
 
      <!--Charger les scripts localement -->
-
+     
     <script src="assets/js/jquery-3.5.1.js"></script>
     <script src="assets/js/jquery.min.js"></script>
 
     
     <script src="assets/js/jquery.dataTables.min.js"></script>
-    <script src="renderer.js"></script>
-    <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="renderer2.js"></script>
+    <script src="historique.js"></script>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
+    <script>
+        function navigateToHistorique() {
+            window.location.href = "historique.html";
+        }
+        </script>
    
 </body>
 </html>

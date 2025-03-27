@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Page Facture</title>
+  <link rel="stylesheet" href="style.css">
+ <!-- Charger les styles localement -->
+ <link rel="stylesheet" href="assets/css/all.min.css">
+ <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+ <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+   <!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+<!-- Main CSS File -->
+<link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+
+
+
+</style>
+</head>
+<body >
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <div class="profile-img">
+      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+    </div>
+
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1 class="sitename">Alex Smith</h1>
+    </a>
+
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="membres.html"><i class="bi bi-person navicon"></i> Membres</a></li>
+        <li><a href="produit.html"><i class="bi bi-file-earmark-text navicon"></i> Produit</a></li>
+        <li><a href="vente.html"><i class="bi bi-images navicon"></i> Vente</a></li>
+        <li><a href="historique.html"><i class="bi bi-hdd-stack navicon"></i> Historique de vente</a></li>
+        <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="#">Dropdown 1</a></li>
+            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Deep Dropdown 1</a></li>
+                <li><a href="#">Deep Dropdown 2</a></li>
+                <li><a href="#">Deep Dropdown 3</a></li>
+                <li><a href="#">Deep Dropdown 4</a></li>
+                <li><a href="#">Deep Dropdown 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Dropdown 2</a></li>
+            <li><a href="#">Dropdown 3</a></li>
+            <li><a href="#">Dropdown 4</a></li>
+          </ul>
+        </li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+      </ul>
+    </nav>
+
+  </header>
+  <main class="main">
+    <button onclick="navigateToIndex()" class="btn btn-success">Retour</button>
+  <h1>Facture</h1>
+
+  <form id="venteForm">
+    <label for="produitSelect">Sélectionner un produit:</label>
+    <select id="produitSelect" name="produitSelect">
+      <option value="">-- Sélectionner un produit--</option>
+    </select>
+    <label for="quantiteInput">Quantité:</label>
+      <input type="number" id="quantiteInput" name="quantiteInput" min="1" value="1">
+   
+    <button type="button" id="ajouterAuTableau">Ajouter à la facture</button>
+
+  </form>
+ <label for="nomClient">nom du client:</label>
+      <input type="text" id="nomClient" name="nomClient" >
+  <h2>Détails de la facture</h2>
+  <table id="factureTable">
+    <thead>
+      <tr>
+        <th>Nom du produit</th>
+        <th>Quantité</th>
+        <th>Prix unitaire</th>
+        <th>Prix total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Les lignes de la facture seront ajoutées ici -->
+    </tbody>
+  </table>
+ 
+  <p>Total facture: <span id="totalFacture">0.00</span> FCFA</p>
+
+  <button onclick="annulerFacture()" class="btn btn-success">Annuler la facture</button>
+  <button onclick="window.electron.createNewFacture()">Nouvelle Facture</button>
+  <button type="button" id="imprimerFacture">Imprimer la facture</button>
+</main>
+
+
+  <script src="facture.js"></script>
+  <script src="renderer2.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ document.getElementById('memberForm').addEventListener('submit', async function(
     event.preventDefault();
 
     const nom = document.getElementById('nom').value;
-    const prenom = document.getElementById('prenom').value;
+    const NCNI = document.getElementById('NCNI').value;
     const age = document.getElementById('age').value;
     const quartier = document.getElementById('quartier').value;
     const sexe = document.getElementById('sexe').value;
@@ -12,16 +12,28 @@ document.getElementById('memberForm').addEventListener('submit', async function(
     const date_D = document.getElementById('date_D').value;
     const date_F = document.getElementById('date_F').value;
 
-   
-    const memberData = { nom, prenom, age, quartier, sexe, tel, date_i, date_D, date_F};
+    const photoInput = document.getElementById('photo');
+    const file = photoInput.files[0];
 
-    // Ajouter un membre
-    electron.addMember(memberData).then((message) => {
-        alert(message);
-        loadMembers(); // Recharger les membres après l'ajout
-    }).catch((error) => {
-        console.error('Erreur lors de l\'ajout du membre:', error);
-    });
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const photoData = event.target.result; // Base64 de l'image
+            const memberData = { NCNI, nom, age, quartier, sexe, tel, date_i, date_D, date_F, photoData };
+
+            electron.addMember(memberData).then((message) => {
+                alert(message);
+                loadMembers();
+            }).catch((error) => {
+                console.error('Erreur lors de l\'ajout du membre:', error);
+            });
+        };
+        reader.readAsDataURL(file); // Convertit l'image en base64
+    } else {
+        // Si pas de photo, on envoie sans l'image
+        const memberData = { NCNI, nom, age, quartier, sexe, tel, date_i, date_D, date_F, photoData: null };
+        electron.addMember(memberData);
+    }
 });
 
 // Charger les membres
@@ -38,56 +50,62 @@ function loadMembers() {
             if(row.date_D< today && today<row.date_F){
                 membersTableBody.append(`
                     <tr>
+                    <td>
+                        ${row.photo ? `<img src="${row.photo}" width="50">` : 'Pas de photo'}
+                    </td>
+                        <td>${row.NCNI}</td>
                         <td>${row.nom}</td>
-                        <td>${row.prenom}</td>
                         <td>${row.age}</td>
-                        <td>${row.quartier}</td>
                         <td>${row.sexe}</td>
                         <td>${row.tel}</td>
                         <td>${row.date_i}</td>
                         <td><button class="btn btn-primary"">EN COURS</button></td>
-                        <td><button onclick="openParamModal(${row.id} )" class="btn btn-secondary">Ajouter Paramètre</button></td>
-                        <td><button class="btn btn-info" onclick="openEditModal(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
+                        <td><button onclick="openParamModalMember(${row.id} )" class="btn btn-secondary">Ajouter<br>Paramètre</button></td>
+                        <td><button class="btn btn-info" onclick="openEditModalMember(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
                         <td><button onclick="deleteMember(${row.id})" class="btn btn-danger">Supprimer</button></td>
-                        <td><button onclick="openPayeModal(${row.id} )" class="btn btn-primary">Effectuer un payement</button></td>
-                        <td><button onclick="openAfficheModal(${row.id} )" class="btn btn-primary">Detail</button></td>
+                        <td><button onclick="openPayeModalMember(${row.id} )" class="btn btn-primary">Effectuer un<br> payement</button></td>
+                        <td><button onclick="openAfficheModalMember(${row.id} )" class="btn btn-primary">Detail</button></td>
                     </tr>
                 `);
             }else if(row.date_D> today){
                 membersTableBody.append(`
                     <tr>
+                    <td>
+                        ${row.photo ? `<img src="${row.photo}" width="50">` : 'Pas de photo'}
+                    </td>
+                        <td>${row.NCNI}</td>
                         <td>${row.nom}</td>
-                        <td>${row.prenom}</td>
                         <td>${row.age}</td>
-                        <td>${row.quartier}</td>
                         <td>${row.sexe}</td>
                         <td>${row.tel}</td>
                         <td>${row.date_i}</td>
                         <td><button class="btn btn-warning">EN ATTENTE</button></td>
-                        <td><button onclick="openParamModal(${row.id} )" class="btn btn-secondary">Ajouter Paramètre</button></td>
-                        <td><button class="btn btn-info" onclick="openEditModal(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
+                        <td><button onclick="openParamModalMember(${row.id} )" class="btn btn-secondary">Ajouter<br>Paramètre</button></td>
+                        <td><button class="btn btn-info" onclick="openEditModalMember(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
                         <td><button onclick="deleteMember(${row.id})" class="btn btn-danger">Supprimer</button></td>
-                        <td><button onclick="openPayeModal(${row.id} )" class="btn btn-primary">Effectuer un payement</button></td>
-                        <td><button onclick="openAfficheModal(${row.id} )" class="btn btn-primary">Detail</button></td>
+                        <td><button onclick="openPayeModalMember(${row.id} )" class="btn btn-primary">Effectuer un<br> payement</button></td>
+                        <td><button onclick="openAfficheModalMember(${row.id} )" class="btn btn-primary">Detail</button></td>
 
                     </tr>
                 `);
             }else if(today>row.date_F){
                 membersTableBody.append(`
                     <tr>
+                    <td>
+                        ${row.photo ? `<img src="${row.photo}" width="50">` : 'Pas de photo'}
+                    </td>
+                        <td>${row.NCNI}</td>
                         <td>${row.nom}</td>
-                        <td>${row.prenom}</td>
                         <td>${row.age}</td>
-                        <td>${row.quartier}</td>
                         <td>${row.sexe}</td>
                         <td>${row.tel}</td>
                         <td>${row.date_i}</td>
                         <td><button class="btn btn-danger">TERMINER</button></td>
-                        <td><button onclick="openParamModal(${row.id} )" class="btn btn-secondary">Ajouter Paramètre</button></td>
-                        <td><button class="btn btn-info" onclick="openEditModal(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
+                        <td><button onclick="openParamModalMember(${row.id} )" class="btn btn-secondary">Ajouter<br> Paramètre</button></td>
+                        <td><button class="btn btn-info" onclick="openEditModalMember(${row.id}, '${row.nom}', '${row.prenom}', ${row.age}, '${row.quartier}', '${row.sexe}', '${row.tel}', '${row.date_i}', '${row.date_D}', '${row.date_F}')">Modifier</button></td>
                         <td><button onclick="deleteMember(${row.id})" class="btn btn-danger">Supprimer</button></td>
-                        <td><button onclick="openPayeModal(${row.id} )" class="btn btn-primary">Effectuer un payement</button></td>
-                        <td><button onclick="openAfficheModal(${row.id} )" class="btn btn-primary">Detail</button></td>
+                        <td><button onclick="openPayeModalMember(${row.id} )" class="btn btn-primary">Effectuer un<br> payement</button></td>
+                        <td><button onclick="openAfficheModalMember(${row.id} )" class="btn btn-primary">Detail</button></td>
 
                     </tr>
                 `);
@@ -169,33 +187,33 @@ function loadPayement(id_membre) {
         console.error("Erreur lors du chargement des payements :", error);
     });
 }
-function openParamModal(memberId) {
+function openParamModalMember(memberId) {
     $('#paramMemberId').val(memberId);
     $('#paramModal').css('display', 'block');
 }
-function openPayeModal(memberId) {
+function openPayeModalMember(memberId) {
     $('#payeMemberId').val(memberId);
     $('#payeModal').css('display', 'block');
 }
-function openParamModal2() {
+function openParamModal2Member() {
     $('#paramModal2').css('display', 'block');
 }
-function openAfficheModal(memberId) {
+function openAfficheModalMember(memberId) {
     loadParametre(memberId);
     loadPayement(memberId);
     $('#afficheModal').css('display', 'block');
 }
-function closeAfficheModal() {
+function closeAfficheModalMember() {
     $('#afficheModal').css('display', 'none');
 }
 
-function closeModal() {
+function closeModalMember() {
     $('#paramModal').css('display', 'none');
 }
-function closeModal2() {
+function closeModal2Member() {
     $('#paramModal2').css('display', 'none');
 }
-function closeModal3() {
+function closeModal3Member() {
     $('#payeModal').css('display', 'none');
 }
 
@@ -239,7 +257,7 @@ $('#paramForm').submit(function(event) {
     });
 });
 // Fermer la modale d'édition
-function closeEditModal() {
+function closeEditModalMember() {
     $('#editModal').css('display', 'none');
 }
 
@@ -248,8 +266,8 @@ $('#editForm').submit(function (event) {
     event.preventDefault();
 
     const id = $('#editMemberId').val();
+    const NCNI = $('#editNCNI').val();
     const nom = $('#editNom').val();
-    const prenom = $('#editPrenom').val();
     const age = $('#editAge').val();
     const quartier = $('#editQuartier').val();
     const sexe = $('#editSexe').val();
@@ -258,7 +276,7 @@ $('#editForm').submit(function (event) {
     const date_D = $('#editDate_D').val();
     const date_F = $('#editDate_F').val();
 
-    const memberData = { id, nom, prenom, age, quartier, sexe, tel, date_i, date_D, date_F };
+    const memberData = { id, NCNI, nom, age, quartier, sexe, tel, date_i, date_D, date_F };
 
     electron.updateMember(memberData).then((message) => {
         alert(message);
@@ -281,10 +299,10 @@ function deleteMember(id) {
     }
 }
 // Ouvrir la modale d'édition avec les informations du membre
-function openEditModal(id, nom, prenom, age, quartier, sexe, tel, date_i, date_D, date_F) {
+function openEditModalMember(id, NCNI, nom, age, quartier, sexe, tel, date_i, date_D, date_F) {
     $('#editMemberId').val(id);
-    $('#editNom').val(nom);
-    $('#editPrenom').val(prenom);
+    $('#editNCNI').val(NCNI);
+    $('#editNom').val(prenom);
     $('#editAge').val(age);
     $('#editQuartier').val(quartier);
     $('#editSexe').val(sexe);
@@ -297,3 +315,7 @@ function openEditModal(id, nom, prenom, age, quartier, sexe, tel, date_i, date_D
 }
 // Initialiser l'affichage des membres
 loadMembers();
+
+
+
+//code patrick

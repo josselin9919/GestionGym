@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Facture</title>
+  <link rel="stylesheet" href="style.css"> <!-- Incluez votre CSS pour la mise en forme -->
+  <style>
+    /* Styles spécifiques à l'impression */
+    body {
+      font-family: sans-serif;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .company-info {
+      text-align: left;
+    }
+    .customer-info {
+      text-align: right;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    .total-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .total-amount {
+      font-weight: bold;
+    }
+    .date {
+      text-align: right;
+    }
+    @media print {
+      /* Styles pour l'impression */
+      body * {
+        visibility: visible;
+      }
+      .no-print {
+        display: none; /* Cacher les éléments non nécessaires à l'impression */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="company-info">
+      <h2>Votre Entreprise</h2>
+      <p>Adresse : ...</p>
+      <p>Téléphone : ...</p>
+    </div>
+    <div class="customer-info">
+      <h2>Client : <span id="nomClient"></span></h2>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom du Produit</th>
+        <th>Prix Unitaire</th>
+        <th>Quantité</th>
+        <th>Prix Total</th>
+      </tr>
+    </thead>
+    <tbody id="factureItemsBody">
+    </tbody>
+  </table>
+
+  <div class="total-info">
+    <div class="total-amount">
+      Total : <span id="totalFacture"></span><br>
+      <span id="totalFactureEnLettres"></span>
+    </div>
+    <div class="date">
+      Date : <span id="dateFacture"></span>
+    </div>
+  </div>
+
+  
+  <script src="factureImpression.js"></script>
+</body>
+</html>
