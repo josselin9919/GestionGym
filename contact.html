@@ -67,10 +67,14 @@ body {
 }
 
 .image {
-    width: 1050px;
-    height: 1050px;
+    width: 525px;
+    height: 525px;
     border-radius: 3%;
     border: 3px solid white;
+    transition: transform 0.3s ease;
+}
+.image:hover{
+  transform: scale(1.05);  
 }
 
 /* Nom */
@@ -115,10 +119,10 @@ body {
     transition: 0.3s;
 }
 /* ----- Coloration "Historique des Ventes" ----- */
-.navmenu ul li a[href="index.html"] {
+.navmenu ul li a[href="contact.html"] {
     background-color: #325e81;
 }
-.navmenu ul li a[href="index.html"]:hover {
+.navmenu ul li a[href="contact.html"]:hover {
     background-color: #212c35;
 }
 
@@ -157,17 +161,6 @@ h1 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     font-size: 28px;
-    font-weight: bold;
-}
-
-h3 {
-    background-color: #007bff;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    font-size: 15px;
     font-weight: bold;
 }
 
@@ -259,18 +252,6 @@ h2::first-letter{
   font-size: 2em;
 }
 
-.boite {
-  width: 230px; /* Largeur de la boîte */
-  height: 150px; /* Hauteur de la boîte */
-  border: 2px solid #d3e0ec; /* Bordure de 2 pixels, noire */
-  margin: 10px; /* Marge extérieure de 10 pixels */
-  background-color: white; /* Couleur de fond gris clair */
-box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
-display: inline-block;
-margin-right:110px;
-}
-
     </style>
 </head>
 <body>
@@ -318,13 +299,9 @@ margin-right:110px;
     
       </header>
       <main class="main">
-        <h1>Bienvenue chez DanGym</h1>
-        <div class="boite"><h3>Total membres</h3></div>
-
-        <div class="boite"> <h3>Total ventes</h3></div>
-  <div class="boite"><h3>Total produits</h3></div>
-  
-        
+        <h1>Nos flyers</h1>
+        <img src="assets/images/flyers.jpg" alt="" class="image">
+        <img src="assets/images/flyers1.jpg" alt="" class="image">
       </main>
  
 

@@ -3,38 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <title>Historique des Ventes</title>
-    <!-- Ajoutez vos styles CSS ici -->
-     <!-- Charger les styles localement -->
-     <link rel="stylesheet" href="assets/css/all.min.css">
-     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
- 
-     <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
-       <!-- Vendor CSS Files -->
-   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
- 
-   <!-- Main CSS File -->
-   <link href="assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+    
 </head>
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/all.min.css">
+
+
+<style>
+ /* ----- Importation d'une police moderne ----- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #f5f5f5;
+    padding: 10px 10px 5px 10px; /* Réduction des marges */
+}
+
+/* ----- Sidebar (Menu latéral) ----- */
+.header {
+    width: 245px; /* Légèrement réduite */
+    height: 98vh; /* Moins d’espace en bas */
+    background: linear-gradient(to bottom, #007bff, #0099ff);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    position: fixed;
+    border-radius: 10px; /* Coins arrondis */
+}
+
+/* Profil - Cercle centré */
+.profile-img {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.profile-img img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+/* Nom */
+.sitename {
+    margin: 10px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* ----- Menu de navigation ----- */
+.navmenu ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.navmenu ul li {
+    margin: 8px 0;
+}
+
+
+
+/* Liens du menu */
+.navmenu ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.navmenu ul li a:hover {
+    text-decoration: none;
+    background-color: #325e81;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+/* ----- Coloration "Historique des Ventes" ----- */
+.navmenu ul li a[href="historique.html"] {
+    background-color: #325e81;
+}
+.navmenu ul li a[href="historique.html"]:hover {
+    background-color: #212c35;
+}
+
+/* Icônes */
+.navicon {
+    margin-right: 10px;
+}
+
+/* ----- Rétablissement de la flèche du dropdown ----- */
+.dropdown .toggle-dropdown {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.dropdown.open .toggle-dropdown {
+    transform: rotate(180deg);
+}
+
+/* Suppression des sous-menus dropdown */
+.dropdown ul {
+    display: none;
+}
+
+/* ----- Contenu principal ----- */
+.main {
+    margin-left: 260px; /* Réduction de l’espace */
+    width: calc(100% - 270px);
+}
+
+/* Titre principal avec fond blanc */
+h1 {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* ----- Boutons de recherche alignés sur une seule ligne ----- */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Espacement réduit entre les inputs */
+.search-container input {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 180px;
+}
+
+/* ----- Tableau des ventes ----- */
+#historiqueTable {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* En-tête du tableau */
+#historiqueTable th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Contenu du tableau */
+#historiqueTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Effet lorsqu'on clique sur une ligne */
+#historiqueTable tbody tr {
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+#historiqueTable tbody tr:hover {
+    background-color: #e9f5ff;
+}
+
+#historiqueTable tbody tr:active {
+    background-color: #d1e7fd;
+}
+
+/* Suppression des boutons "Previous" et "Next" */
+.dataTables_wrapper .dataTables_paginate {
+    display: none !important;
+}
+
+/* ----- Boutons d'action (Modifier / Supprimer) ----- */
+.actions button {
+    margin: 5px;
+    padding: 5px 10px;
+}
+
+/* ----- Bouton Retour bien aligné ----- */
+.btn-retour {
+    display: block;
+    margin: 20px auto 0 auto;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-retour:hover {
+    background-color: #218838;
+}
+
+/* ----- Notification stylée ----- */
+.custom-notification {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0.9;
+    transition: opacity 0.5s;
+}
+
+.custom-notification.success {
+    background-color: #28a745;
+}
+
+.custom-notification.error {
+    background-color: #dc3545;
+}
+
+.custom-notification.warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+/* ----- Indicateur de chargement ----- */
+#loadingIndicator {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* Style général des boutons */
+.btn {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px; /* Coins arrondis */
+    transition: all 0.3s ease-in-out; /* Animation fluide */
+    text-transform: uppercase;
+}
+
+/* Bouton Retour */
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    color: white;
+    float: right;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: scale(1.05);
+}
+
+/* Bouton Recherche */
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: scale(1.05);
+}
+
+/* Bouton Supprimer */
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border: none;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c82333, #bd2130);
+    transform: scale(1.05);
+}
+
+/* Espacement entre les boutons */
+.search-container .btn {
+    margin: 5px;
+}
+h2{
+  color: rgb(252, 249, 249);
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+
+h2:hover{
+  color: #3a5469;
+}
+
+h2::first-letter{
+  font-size: 2em;
+}
+
+
+</style>
+
 <body>
     <header id="header" class="header dark-background d-flex flex-column">
-        <i class="header-toggle d-xl-none bi bi-list"></i>
+        
     
         <div class="profile-img">
-          <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+          <img src="assets/images/logogym.jpg" alt="" class="img-fluid rounded-circle">
         </div>
     
         <a href="index.html" class="logo d-flex align-items-center justify-content-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename">Alex Smith</h1>
+          <h2 class="sitename">Dan</h2>  <h2 class="sitename"> Gym</h2> 
         </a>
     
     
@@ -62,13 +380,13 @@
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li>
-            <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+            <li><a href="contact.html"><i class="bi bi-envelope navicon"></i> Contact</a></li>
           </ul>
         </nav>
     
       </header>
       <main class="main">
-    <button onclick="navigateToProduit()" class="btn btn-success">Retour à la page produit</button>
+    
     <h1>Historique des Ventes</h1>
     <div class="search-container">
       <label for="dateSearch">Rechercher par date :</label>
@@ -104,6 +422,7 @@
             <!-- Les données de l'historique seront insérées ici -->
         </tbody>
     </table>
+    <button onclick="navigateToProduit()" class="btn btn-success">Retour à la page d'accueil</button>
 </main>
     <!-- Inclure jQuery et DataTables -->
     <script src="assets/js/jquery-3.5.1.js"></script>
