@@ -419,7 +419,11 @@ table {
         .fermer:hover{
             background-color:  #8f0d1a;
         }
-
+        .ferme1{
+            background-color:  #bd2130;
+            transform: translateX(305px);
+            width: 80px;
+        }
        
     </style>
   
@@ -496,7 +500,7 @@ table {
     <!-- Modale de modification -->
 <div id="editModal" class="modal">
     <div class="modal-content">
-        <h2>Modifier Produit</h2>
+        <h3>Modifier Produit</h3>
         <form id="editForm">
             <input type="hidden" id="editProductId">
             <input type="text" id="editNom" placeholder="Nom" required>
@@ -504,7 +508,7 @@ table {
             <input type="number" id="editQuantite" placeholder="Quantite" required>
             
             <button type="submit">Enregistrer</button>
-            <button type="button" onclick="closeEditModal()">Fermer</button>
+            <button class="ferme1" type="button" onclick="closeEditModal()">Fermer</button>
         </form>
     </div>
 </div>
