@@ -1,23 +1,58 @@
 {
-  "name": "projet",
+  "name": "gestiongym",
   "version": "1.0.0",
+  "description": "Application de gestion de salle de gym",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.0",
+    "@electron-forge/maker-deb": "^7.8.0",
+    "@electron-forge/maker-rpm": "^7.8.0",
+    "@electron-forge/maker-squirrel": "^7.8.0",
+    "@electron-forge/maker-zip": "^7.8.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.0",
+    "@electron-forge/plugin-fuses": "^7.8.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "34.2.0",
+    "electron-builder": "^25.1.8"
+  },
   "dependencies": {
-    "datatables.net-dt": "^2.2.2",
-    "electron": "^34.3.0",
-    "electron-printer": "^0.0.5",
-    "projet": "file:",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "gestiongym": "file:",
     "sqlite3": "^5.1.7"
   },
-  "devDependencies": {
-    "electron-rebuild": "^3.2.9"
+  "build": {
+    "appId": "com.example.app",
+    "productName": "Gym Manager",
+    "copyright": "© 2025 Gym Manager",
+    "npmRebuild": false,
+    "files": [
+      "**/*",
+      "./main.js"
+    ],
+    "extraResources": [
+      "./members.db"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }
+
