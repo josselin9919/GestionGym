@@ -122,6 +122,35 @@ body {
     background-color: #212c35;
 }
 
+        /* Cache les sous-menus par défaut */
+.navmenu ul li ul {
+    display: none;
+    position: absolute;
+    background-color: #325e81;
+    border-radius: 5px;
+    padding: 0;
+    list-style: none;
+    z-index: 1000; /* Assure que le menu apparaît au-dessus des autres éléments */
+}
+
+/* Affiche le sous-menu lorsque le parent a la classe 'open' */
+.navmenu ul li.dropdown.open > ul {
+    display: block;
+}
+
+/* Style des liens dans le sous-menu */
+.navmenu ul li ul li a {
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change la couleur de fond au survol des liens du sous-menu */
+.navmenu ul li ul li a:hover {
+    background-color: #212c35;
+}
+
 /* Icônes */
 .navicon {
     margin-right: 10px;
@@ -326,7 +355,37 @@ margin-right:110px;
   
         
       </main>
- 
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sélectionne tous les éléments de menu ayant une classe 'dropdown'
+            var dropdowns = document.querySelectorAll('.dropdown');
+        
+            dropdowns.forEach(function(dropdown) {
+                // Ajoute un écouteur d'événement pour le clic sur chaque dropdown
+                dropdown.addEventListener('click', function(event) {
+                    // Empêche la propagation de l'événement pour éviter des comportements inattendus
+                    event.stopPropagation();
+        
+                    // Ferme tous les autres dropdowns avant d'ouvrir celui-ci
+                    dropdowns.forEach(function(item) {
+                        if (item !== dropdown) {
+                            item.classList.remove('open');
+                        }
+                    });
+        
+                    // Bascule la classe 'open' pour afficher ou cacher le sous-menu
+                    dropdown.classList.toggle('open');
+                });
+            });
+        
+            // Ferme le menu déroulant si l'utilisateur clique en dehors
+            document.addEventListener('click', function() {
+                dropdowns.forEach(function(dropdown) {
+                    dropdown.classList.remove('open');
+                });
+            });
+        });
+        </script>
 
      <!--Charger les scripts localement -->
 
